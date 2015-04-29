@@ -343,12 +343,12 @@
     }];
 }
 
-- (CGFloat)cellHeightForObject:(id)object indexPath:(NSIndexPath *)indexPath
+- (CGFloat)cellHeightForObject:(id)object nextObject:(id)nextObject indexPath:(NSIndexPath *)indexPath
 {
-    return [self cellHeightForObject:object indexPath:indexPath cellReuseIdentifier:nil];
+    return [self cellHeightForObject:object nextObject:nextObject indexPath:indexPath cellReuseIdentifier:nil];
 }
 
-- (CGFloat)cellHeightForObject:(id)object indexPath:(NSIndexPath *)indexPath cellReuseIdentifier:(NSString *)reuseIdentifier
+- (CGFloat)cellHeightForObject:(id)object nextObject:(id)nextObject indexPath:(NSIndexPath *)indexPath cellReuseIdentifier:(NSString *)reuseIdentifier
 {
     NSParameterAssert(indexPath);
 
@@ -357,7 +357,7 @@
     {
         RZCellSizeManagerCellConfiguration* configuration = [self configurationForObject:object reuseIdentifier:reuseIdentifier];
         
-        height = [self cellHeightForObject:object configuration:configuration];
+        height = [self cellHeightForObject:object nextObject:nextObject configuration:configuration];
         
         if (height)
         {
@@ -367,12 +367,12 @@
     return [height floatValue];
 }
 
-- (CGSize)cellSizeForObject:(id)object indexPath:(NSIndexPath *)indexPath
+- (CGSize)cellSizeForObject:(id)object nextObject:(id)nextObject indexPath:(NSIndexPath *)indexPath
 {
-    return [self cellSizeForObject:object indexPath:indexPath cellReuseIdentifier:nil];
+    return [self cellSizeForObject:object nextObject:nextObject indexPath:indexPath cellReuseIdentifier:nil];
 }
 
-- (CGSize)cellSizeForObject:(id)object indexPath:(NSIndexPath *)indexPath cellReuseIdentifier:(NSString *)reuseIdentifier
+- (CGSize)cellSizeForObject:(id)object nextObject:(id)nextObject indexPath:(NSIndexPath *)indexPath cellReuseIdentifier:(NSString *)reuseIdentifier
 {
     NSParameterAssert(indexPath);
     
@@ -388,7 +388,7 @@
             if (configuration.configurationBlock)
             {
                 [configuration.cell prepareForReuse];
-                configuration.configurationBlock(configuration.cell, object);
+                configuration.configurationBlock(configuration.cell, object, nextObject);
                 UIView* contentView = [configuration.cell contentView];
                 size = [contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
                 validSize = YES;
@@ -396,7 +396,7 @@
             }
             else if (configuration.sizeBlock)
             {
-                size = configuration.sizeBlock(configuration.cell, object);
+                size = configuration.sizeBlock(configuration.cell, object, nextObject);
                 validSize = YES;
                 
             }
@@ -507,7 +507,7 @@
 
 }
 
-- (NSNumber *)cellHeightForObject:(id)object configuration:(RZCellSizeManagerCellConfiguration *)configuration
+- (NSNumber *)cellHeightForObject:(id)object nextObject:(id)nextObject configuration:(RZCellSizeManagerCellConfiguration *)configuration
 {
     NSNumber* height = nil;
     if (configuration)
@@ -515,14 +515,14 @@
         if (configuration.configurationBlock)
         {
             [configuration.cell prepareForReuse];
-            configuration.configurationBlock(configuration.cell, object);
+            configuration.configurationBlock(configuration.cell, object, nextObject);
             [configuration.cell layoutIfNeeded];
             UIView* contentView = [configuration.cell contentView];
             height = @([contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + self.cellHeightPadding);
         }
         else if (configuration.heightBlock)
         {
-            height = @(configuration.heightBlock(configuration.cell, object) + self.cellHeightPadding);
+            height = @(configuration.heightBlock(configuration.cell, object, nextObject) + self.cellHeightPadding);
         }
         
     }

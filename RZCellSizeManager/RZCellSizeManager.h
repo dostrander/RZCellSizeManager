@@ -27,9 +27,9 @@
 //
 #import <Foundation/Foundation.h>
 
-typedef void    (^RZCellSizeManagerConfigBlock)(id cell, id object);
-typedef CGFloat (^RZCellSizeManagerHeightBlock)(id cell, id object);
-typedef CGSize  (^RZCellSizeManagerSizeBlock)(id cell, id object);
+typedef void    (^RZCellSizeManagerConfigBlock)(id cell, id object, id nextObject);
+typedef CGFloat (^RZCellSizeManagerHeightBlock)(id cell, id object, id nextObject);
+typedef CGSize  (^RZCellSizeManagerSizeBlock)(id cell, id object, id nextObject);
 
 /**
  *  RZCellSizeManager
@@ -203,7 +203,7 @@ typedef CGSize  (^RZCellSizeManagerSizeBlock)(id cell, id object);
  *
  *  @return Height of the cell.
  */
-- (CGFloat)cellHeightForObject:(id)object indexPath:(NSIndexPath *)indexPath;
+- (CGFloat)cellHeightForObject:(id)object nextObject:(id)nextObject indexPath:(NSIndexPath *)indexPath;
 
 /**
  *  Return the height for a table view cell at a particular index path, for a particular object and reuse identifier.
@@ -214,7 +214,7 @@ typedef CGSize  (^RZCellSizeManagerSizeBlock)(id cell, id object);
  *
  *  @return Height of the cell.
  */
-- (CGFloat)cellHeightForObject:(id)object indexPath:(NSIndexPath *)indexPath cellReuseIdentifier:(NSString *)reuseIdentifier;
+- (CGFloat)cellHeightForObject:(id)object nextObject:(id)nextObject indexPath:(NSIndexPath *)indexPath cellReuseIdentifier:(NSString *)reuseIdentifier;
 
 /**
  *  Return the size for a collection view cell at a particular index path, for a particular object.
@@ -224,7 +224,7 @@ typedef CGSize  (^RZCellSizeManagerSizeBlock)(id cell, id object);
  *
  *  @return Size of the cell.
  */
-- (CGSize)cellSizeForObject:(id)object indexPath:(NSIndexPath *)indexPath;
+- (CGSize)cellSizeForObject:(id)object nextObject:(id)nextObject indexPath:(NSIndexPath *)indexPath;
 
 /**
  *  Return the size for a collection view cell at a particular index path, for a particular object and reuse identifier.
@@ -235,6 +235,6 @@ typedef CGSize  (^RZCellSizeManagerSizeBlock)(id cell, id object);
  *
  *  @return Size of the cell.
  */
-- (CGSize)cellSizeForObject:(id)object indexPath:(NSIndexPath *)indexPath cellReuseIdentifier:(NSString *)reuseIdentifier;
+- (CGSize)cellSizeForObject:(id)object nextObject:(id)nextObject indexPath:(NSIndexPath *)indexPath cellReuseIdentifier:(NSString *)reuseIdentifier;
 
 @end

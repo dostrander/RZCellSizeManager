@@ -76,14 +76,14 @@
     [self.sizeManager registerCellClassName:@"RZTableViewCell"
                                withNibNamed:nil
                              forObjectClass:[RZCellData class]
-                         withConfigurationBlock:^(id cell, id object) {
+                         withConfigurationBlock:^(id cell, id object, id nextObject) {
                              [cell setCellData:object];
                          }];
     
     [self.sizeManager registerCellClassName:@"RZSecondTableViewCell"
                                withNibNamed:nil
                              forObjectClass:[RZOtherCellData class]
-                         withConfigurationBlock:^(RZSecondTableViewCell* cell, RZOtherCellData* object) {
+                         withConfigurationBlock:^(RZSecondTableViewCell* cell, RZOtherCellData* object, RZOtherCellData* nextObject) {
                              [cell setOtherCellData:object];
                          }];
 
@@ -150,10 +150,10 @@
 {
     // Retrieve our object to give to our size manager.
     id object = [self.dataArray objectAtIndex:indexPath.row];
-    
+
     // Since we have multiple different types of cells for the same tableview we either need to register our object classes,
     //  Or we have to give it a reuseIdentifier.
-    return [self.sizeManager cellHeightForObject:object indexPath:indexPath];
+    return [self.sizeManager cellHeightForObject:object nextObject:nil indexPath:indexPath];
 //    return [self.sizeManager cellHeightForObject:object indexPath:indexPath cellReuseIdentifier:(([object isKindOfClass:[RZCellData class]]) ? [RZTableViewCell reuseIdentifier] : [RZSecondTableViewCell reuseIdentifier])];
     
     
